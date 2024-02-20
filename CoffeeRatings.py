@@ -29,13 +29,13 @@ data['Origin'] = np.NaN
 # Loop through new dataframe rows and populate Price, Roast, and Origin columns by querying corresponding entries from CoffeeStats
 for i, name in enumerate(data['CoffeeName']):
     data['Price'].iloc[i] = np.array(dataCS['Price'][dataCS['CoffeeName']==name]).copy()
-    data['Roast'].iloc[i] = np.array(dataCS['Roast'][dataCS['CoffeeName']==name]).copy()
-    data['Origin'].iloc[i] = np.array(dataCS['Origin'][dataCS['CoffeeName']==name]).copy()
+    data['Roast'].iloc[i] = dataCS['Roast'][dataCS['CoffeeName']==name].copy()
+    data['Origin'].iloc[i] = dataCS['Origin'][dataCS['CoffeeName']==name].copy()
 
 # Bargraph of Rating per coffee, rater as legend
 plt.figure()
-ax = sns.barplot(dataCR, x='CoffeeName', y='Rating',facecolor='gray')
-sns.stripplot(dataCR, x='CoffeeName', y='Rating', hue='RaterName')
+ax = sns.barplot(data, x='CoffeeName', y='Rating',facecolor='gray')
+sns.stripplot(data, x='CoffeeName', y='Rating', hue='RaterName')
 handles, labels = ax.get_legend_handles_labels()
 ax.legend( title='Rater', bbox_to_anchor=(1, 1.02), loc='upper left')
 plt.setp( ax.xaxis.get_majorticklabels(), rotation=45, ha='right', rotation_mode='anchor' );
